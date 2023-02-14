@@ -6,14 +6,12 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * @author：LuckySgr.
- * @date: 2021/12/19
+ * @date: 2023/2/14
  */
 public class RequestHolder {
 
     /**
      * 获取当前线程响应
-     *
-     * @return
      */
     public static HttpServletResponse getCurrentResponse() {
         return ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getResponse();

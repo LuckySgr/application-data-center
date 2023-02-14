@@ -13,7 +13,7 @@ import java.io.Serializable;
 
 /**
  * @author：LuckySgr.
- * @date: 2021/12/19
+ * @date: 2023/2/14
  */
 @Data
 @Slf4j
@@ -41,19 +41,15 @@ public class ApiResponse<T> implements Serializable {
      * 无业务数据的成功响应
      * @return
      */
-    public static ApiResponse success() {
+    public static<T> ApiResponse<T> success() {
         return success(null);
     }
 
     /**
      * 带业务数据的成功响应
-     *
-     * @param data
-     * @param <T>
-     * @return
      */
-    public static <T> ApiResponse success(T data) {
-        ApiResponse response = new ApiResponse();
+    public static <T> ApiResponse<T> success(T data) {
+        ApiResponse<T> response = new ApiResponse<>();
         response.setCode(ReturnCode.SUCCESS.getCode());
         response.setMessage(ReturnCode.SUCCESS.getMsg());
         response.setData(data);
@@ -62,36 +58,27 @@ public class ApiResponse<T> implements Serializable {
 
     /**
      * 响应失败
-     *
-     * @return
      */
-    public static ApiResponse fail() {
+    public static<T> ApiResponse<T> fail() {
         return fail(ReturnCode.FAIL.getCode(), ReturnCode.FAIL.getMsg());
     }
 
 
     /**
      * 响应失败
-     *
-     * @param responseCode
-     * @return
      */
-    public static ApiResponse fail(ReturnCode responseCode) {
+    public static<T> ApiResponse<T> fail(ReturnCode responseCode) {
         return fail(responseCode.getCode(), responseCode.getMsg());
     }
 
     /**
      * 响应失败
-     *
-     * @param failCode
-     * @param msg
-     * @return
      */
-    public static ApiResponse fail(int failCode, String msg, Object obj) {
-        ApiResponse response = new ApiResponse();
+    public static<T> ApiResponse<T> fail(int failCode, String msg, T data) {
+        ApiResponse<T> response = new ApiResponse<>();
         response.setCode(failCode);
         response.setMessage(msg);
-        response.setData(obj);
+        response.setData(data);
         //设置响应头
         HttpServletResponse currentResponse = RequestHolder.getCurrentResponse();
         currentResponse.setStatus(getResponseStatus(failCode));
@@ -100,13 +87,9 @@ public class ApiResponse<T> implements Serializable {
 
     /**
      * 响应失败
-     *
-     * @param failCode
-     * @param msg
-     * @return
      */
-    public static ApiResponse fail(int failCode, String msg) {
-        ApiResponse response = new ApiResponse();
+    public static<T> ApiResponse<T> fail(int failCode, String msg) {
+        ApiResponse<T> response = new ApiResponse<>();
         response.setCode(failCode);
         response.setMessage(msg);
         //设置响应头
